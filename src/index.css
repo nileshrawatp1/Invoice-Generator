@@ -1,0 +1,10 @@
+:root {
+    --text-color: #333;
+    --h-color: #2c3e50;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    place-items: center;
+}
