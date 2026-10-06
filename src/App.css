@@ -1,5 +1,6 @@
 .container {
     max-width: 900px;
+    width: 100%;
     background-color: #fff;
     box-sizing: border-box;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -8,7 +9,39 @@
     border-radius: 8px;
 }
 
+.form-section {
+    padding: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    background: #fafafa;
+
+    &>h4 {
+        color: var(--h4-color);
+        margin-top: 0;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+
+    .col {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 200px;
+    }
+}
+
 h2 {
     color: var(--h-color);
     text-align: center;
+}
+
+.error {
+    margin-top: 3px;
+    color: red;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: small;
 }
