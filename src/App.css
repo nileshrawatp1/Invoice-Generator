@@ -25,6 +25,29 @@
         flex-wrap: wrap;
         gap: 15px;
         margin-bottom: 10px;
+
+        .col-gst {
+            display: flex;
+            flex-direction: column;
+            flex: 3 1 0;
+        }
+
+        .col-gst.percent {
+            position: relative;
+            display: inline-block;
+            flex: 1 1 0;
+
+            input {
+                padding-right: 25px;
+            }
+
+            .percent-symbol {
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                pointer-events: none;
+            }
+        }
     }
 
     .col {
@@ -40,8 +63,30 @@ h2 {
 }
 
 .error {
-    margin-top: 3px;
+    margin-top: 1px;
+    margin-bottom: 1px;
     color: red;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: small;
+}
+
+label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: var(--input-border);
+        background-color: #3a3aff1a;
+    }
 }
