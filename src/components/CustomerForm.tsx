@@ -8,6 +8,8 @@ export function CostomerForm() {
     const customerData = useForm<CustomerFormData>({
         defaultValues: DEFAULT_FORM_VALS
     });
+    // console.log("first: ", DEFAULT_FORM_VALS);
+
     const {
         register: billData,
         handleSubmit,
@@ -69,15 +71,15 @@ export function CostomerForm() {
                         <div className="col">
                             <label>Invoice Number</label>
                             <input
-                                {...billData("invoiceNumber")}
+                                {...billData("invoiceNumber", { required: true })}
+                                placeholder="e.g. DN/579/26-27"
                             />
                         </div>
                         <div className="col">
                             <label>Invoice Date</label>
                             <input
                                 type="date"
-                                {...billData("invoiceDate")}
-                                placeholder="e.g. DN/579/26-27"
+                                {...billData("invoiceDate", { required: true, valueAsDate: true })}
                             />
                         </div>
                     </div>
@@ -101,6 +103,7 @@ export function CostomerForm() {
                             <div className="input-wrapper">
                                 <input
                                     {...billData("gstPercent", { required: true })}
+                                    placeholder="e.g 5 or 2.5"
                                 />
                                 <span className="percent-symbol">%</span>
                             </div>
