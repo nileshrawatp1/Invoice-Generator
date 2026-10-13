@@ -1,6 +1,7 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { DEFAULT_FORM_VALS } from "../constants/formDefaults";
+import { DEFAULT_FORM_VALS, GENERIC_ERROR_MSG } from "../constants/formDefaults";
 import type { CustomerFormData } from '../constants/FormTypes'
+import FormInput from "./FormInput";
 import { AddItems } from "./AddItems";
 
 export function CostomerForm() {
@@ -8,13 +9,6 @@ export function CostomerForm() {
     const customerData = useForm<CustomerFormData>({
         defaultValues: DEFAULT_FORM_VALS
     });
-    // console.log("first: ", DEFAULT_FORM_VALS);
-
-    const {
-        register: billData,
-        handleSubmit,
-        formState: { errors },
-    } = customerData;
 
     const onSubmmit = (data: CustomerFormData) => {
         console.log("Customer data: ", data);
@@ -22,93 +16,80 @@ export function CostomerForm() {
 
     return (
         <FormProvider {...customerData}>
-            <form id="invoice-form" onSubmit={handleSubmit(onSubmmit)}>
+            <form id="invoice-form" onSubmit={customerData.handleSubmit(onSubmmit)}>
                 <div className="form-section">
                     <h4>Company Information</h4>
+
                     <div className="row">
-                        <div className="col">
-                            <label>Company Name</label>
-                            <input
-                                {...billData("companyName", { required: true })}
-                                placeholder="Deep Nutrition"
-                            />
-                            {errors.companyName && <p className="error">Company Name Is Required</p>}
-                        </div>
-                        <div className="col">
-                            <label>Company Address</label>
-                            <input
-                                {...billData("companyAdd", {
-                                    required: {
-                                        value: true,
-                                        message: 'Company Address Is Required'
-                                    },
-                                    validate: (fieldValue) => fieldValue.trim() !== '' || 'Add a valid Company Address'
-                                })}
-                                placeholder="Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006"
-                            />
-                            {errors.companyAdd && <p className="error">{errors.companyAdd?.message}</p>}
-                        </div>
+                        <FormInput
+                            fieldName='companyName'
+                            label='Company Name'
+                            placeholder='Deep Nutrition'
+                            validation={{ required: true }}
+                        />
+                        <FormInput
+                            fieldName='companyAdd'
+                            label='Company Address'
+                            placeholder='Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006'
+                            validation={{
+                                required: 'Company Address Is Required',
+                                validate: (val) => String(val).trim() !== '' || 'Add a valid Company Address'
+                            }}
+                        />
                     </div>
+
                     <div className="row">
-                        <div className="col">
-                            <label>Customer Name</label>
-                            <input
-                                {...billData("customerName", { required: true })}
-                                placeholder="Deep Nutrition"
-                            />
-                            {errors.customerName && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                        </div>
-                        <div className="col">
-                            <label>Customer Address</label>
-                            <input
-                                {...billData("customerAdd", { required: true })}
-                                placeholder="Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006"
-                            />
-                            {errors.customerAdd && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                        </div>
+                        <FormInput
+                            fieldName="customerName"
+                            label="Customer Name"
+                            placeholder="e.g. Nilesh Organization"
+                            validation={{ required: GENERIC_ERROR_MSG }}
+                        />
+                        <FormInput
+                            fieldName="customerAdd"
+                            label="Customer Address"
+                            placeholder="Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006"
+                            validation={{ required: GENERIC_ERROR_MSG }}
+                        />
                     </div>
+
                     <div className="row">
-                        <div className="col">
-                            <label>Invoice Number</label>
-                            <input
-                                {...billData("invoiceNumber", { required: true })}
-                                placeholder="e.g. DN/579/26-27"
-                            />
-                        </div>
-                        <div className="col">
-                            <label>Invoice Date</label>
-                            <input
-                                type="date"
-                                {...billData("invoiceDate", { required: true, valueAsDate: true })}
-                            />
-                        </div>
+                        <FormInput
+                            fieldName="invoiceNumber"
+                            label="Invoice Number"
+                            placeholder="e.g. DN/579/26-27"
+                            validation={{ required: GENERIC_ERROR_MSG }}
+                        />
+                        <FormInput
+                            fieldName="invoiceDate"
+                            label="Invoice Date"
+                            inputType='date'
+                            placeholder="e.g. DN/579/26-27"
+                            validation={{ required: GENERIC_ERROR_MSG, valueAsDate: true }}
+                        />
                     </div>
+
                     <div className="row">
-                        <div className="col-gst">
-                            <label>Company GST Number</label>
-                            <input
-                                {...billData("companyGst", { required: true })}
-                            />
-                            {errors.companyGst && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                        </div>
-                        <div className="col-gst">
-                            <label>Customer GST Number</label>
-                            <input
-                                {...billData("customerGst", { required: true })}
-                            />
-                            {errors.customerGst && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                        </div>
-                        <div className="col-gst percent">
-                            <label>GST Percent</label>
-                            <div className="input-wrapper">
-                                <input
-                                    {...billData("gstPercent", { required: true })}
-                                    placeholder="e.g 5 or 2.5"
-                                />
-                                <span className="percent-symbol">%</span>
-                            </div>
-                            {errors.gstPercent && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                        </div>
+                        <FormInput
+                            fieldName="companyGst"
+                            label="Company GST Number"
+                            validation={{ required: GENERIC_ERROR_MSG }}
+                        />
+                        <FormInput
+                            fieldName="customerGst"
+                            label="Customer GST Number"
+                            validation={{ required: GENERIC_ERROR_MSG }}
+                        />
+                        <FormInput
+                            fieldName="gstPercent"
+                            label="GST Percent"
+                            inputType="number"
+                            validation={{ required: GENERIC_ERROR_MSG, valueAsNumber: true }}
+                            className="col-gst percent"
+                            wrapClassName="input-wrapper"
+                            symbolClassName="percent-symbol"
+                            symbol="%"
+                        />
                     </div>
                 </div>
                 <AddItems />
