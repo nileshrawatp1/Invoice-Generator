@@ -1,11 +1,10 @@
-import { useFormContext } from "react-hook-form";
-import type { CustomerFormData } from "../constants/FormTypes";
-import { DEFAULT_FORM_VALS } from "../constants/formDefaults";
+// import { useFormContext } from "react-hook-form";
+// import type { CustomerFormData } from "../constants/FormTypes";
+import { GENERIC_ERROR_MSG } from "../constants/formDefaults";
+import FormInput from "../components/FormInput";
 
 
 export function AddItems() {
-
-    const formItems = useFormContext<CustomerFormData>()
 
     return (
         <>
@@ -13,32 +12,23 @@ export function AddItems() {
                 <h4>Add Items</h4>
 
                 <div className="row">
-                    <div className="col">
-                        <label htmlFor="itemName">Item Name</label>
-                        <input type="text" id="itemName"
-                            {...formItems.register("itemName", { required: true })}
-                        />
-                        {formItems.formState.errors.itemName && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                    </div>
-                    <div className="col">
-                        <label htmlFor="itemQuantity">Item Quantity</label>
-                        <input type="number" id="itemQuantity"
-                            {...formItems.register("itemQuantity", {
-                                required: {
-                                    value: true,
-                                    message: "Item Quantity is Required"
-                                }
-                            })}
-                        />
-                        {formItems.formState.errors.itemQuantity?.message && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                    </div>
-                    <div className="col">
-                        <label htmlFor="itemPrice">Item Price (Rate)</label>
-                        <input type="number" id="itemPrice"
-                            {...formItems.register("itemPrice", { required: true })}
-                        />
-                        {formItems.formState.errors.itemPrice && <p className="error">{DEFAULT_FORM_VALS.fieldError}</p>}
-                    </div>
+                    <FormInput
+                        fieldName="itemName"
+                        label="Item Name"
+                        validation={{ required: GENERIC_ERROR_MSG }}
+                    />
+                    <FormInput
+                        fieldName="itemQuantity"
+                        label="Item Quantity"
+                        inputType="number"
+                        validation={{ required: GENERIC_ERROR_MSG, valueAsNumber: true }}
+                    />
+                    <FormInput
+                        fieldName="itemPrice"
+                        label="Item Price (Rate)"
+                        inputType="number"
+                        validation={{ required: GENERIC_ERROR_MSG, valueAsNumber: true }}
+                    />
                     <div className="col submit-btn">
                         <button type="submit">Add Item</button>
                     </div>
