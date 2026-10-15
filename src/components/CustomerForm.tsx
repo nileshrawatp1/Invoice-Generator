@@ -84,7 +84,11 @@ export function CostomerForm() {
                             fieldName="gstPercent"
                             label="GST Percent"
                             inputType="number"
-                            validation={{ required: GENERIC_ERROR_MSG, valueAsNumber: true }}
+                            validation={{
+                                required: GENERIC_ERROR_MSG,
+                                valueAsNumber: true,
+                                max: 90
+                            }}
                             className="col-gst percent"
                             wrapClassName="input-wrapper"
                             symbolClassName="percent-symbol"

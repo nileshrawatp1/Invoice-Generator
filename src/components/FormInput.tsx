@@ -26,7 +26,9 @@ export default function FormInput({
 }: FormInputProps) {
     const { register, formState: { errors } } = useFormContext<CustomerFormData>();
     const fieldError = errors[fieldName];
-    const mandateryValidation = { ...validation, min: 1 };
+    const mandateryValidation = {
+        ...validation, setValueAs: (value: any) => (typeof value === 'string' ? value.trim() : value),
+    };
 
     return (
         <div className={className}>
