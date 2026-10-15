@@ -1,5 +1,3 @@
-// import { useFormContext } from "react-hook-form";
-// import type { CustomerFormData } from "../constants/FormTypes";
 import { GENERIC_ERROR_MSG } from "../constants/formDefaults";
 import FormInput from "../components/FormInput";
 

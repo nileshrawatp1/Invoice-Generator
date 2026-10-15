@@ -26,14 +26,16 @@ export default function FormInput({
 }: FormInputProps) {
     const { register, formState: { errors } } = useFormContext<CustomerFormData>();
     const fieldError = errors[fieldName];
+    const mandateryValidation = { ...validation, min: 1 };
 
     return (
         <div className={className}>
-            <label>{label}</label>
+            <label htmlFor={fieldName}>{label}</label>
             <div className={wrapClassName ? wrapClassName : undefined}>
                 <input
+                    id={fieldName}
                     type={inputType}
-                    {...register(fieldName, validation)}
+                    {...register(fieldName, mandateryValidation)}
                     placeholder={placeholder}
                 />
                 <span className={symbolClassName ? symbolClassName : undefined}>{symbol}</span>
