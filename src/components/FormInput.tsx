@@ -1,4 +1,4 @@
-import { useFormContext, type RegisterOptions, type Path } from "react-hook-form";
+import { useFormContext, type RegisterOptions, type Path, get } from "react-hook-form";
 import type { CustomerFormData } from "../constants/FormTypes";
 
 interface FormInputProps {
@@ -25,15 +25,19 @@ export default function FormInput({
     validation
 }: FormInputProps) {
     const { register, formState: { errors } } = useFormContext<CustomerFormData>();
-    const fieldError = errors[fieldName];
+    const fieldError = get(errors, fieldName);
+    const mandateryValidation = {
+        ...validation, setValueAs: (value: any) => (typeof value === 'string' ? value.trim() : value),
+    };
 
     return (
         <div className={className}>
-            <label>{label}</label>
+            <label htmlFor={fieldName}>{label}</label>
             <div className={wrapClassName ? wrapClassName : undefined}>
                 <input
+                    id={fieldName}
                     type={inputType}
-                    {...register(fieldName, validation)}
+                    {...register(fieldName, mandateryValidation)}
                     placeholder={placeholder}
                 />
                 <span className={symbolClassName ? symbolClassName : undefined}>{symbol}</span>
