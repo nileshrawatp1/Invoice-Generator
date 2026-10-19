@@ -1,4 +1,4 @@
-import { type FieldArrayWithId } from 'react-hook-form';
+import { useFormContext, useWatch, type FieldArrayWithId } from 'react-hook-form';
 import '../styles/receipt.css';
 import type { CustomerFormData } from '../constants/FormTypes';
 
@@ -7,12 +7,53 @@ type InvoiceReceiptProps = {
 };
 
 const InvoiceReceipt = ({ fields }: InvoiceReceiptProps) => {
+    const { control } = useFormContext<CustomerFormData>();
+    const formVals = useWatch({ control });
+
+    const monthNames = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    ];
+    const [year, month, day] = (formVals.invoiceDate ?? "").split("-");
+    const monthName = monthNames[Number(month) - 1] ?? "";
+    const todayDate = year ? `${day}-${monthName}-${year}` : "";
 
     return (
         <>
             <div id="pdf-content" className="invoice-preview-wrapper">
                 <div className="invoice-box">
-                    <div className="invoice-header">DEEP NUTRITION</div>
+                    <div className="invoice-header">{formVals.companyName?.trim().toUpperCase()}</div>
+                    <div className="invoice-subtext">{formVals.companyAdd?.trim()}</div>
+                    {formVals.companyGst && <div className="invoice-gst">
+                        {`GST: ${formVals.companyGst}`}
+                    </div>}
+                    <div className="tax-invoice">TAX INVOICE</div>
+                    <div className="invoice-customer-details">
+                        <div>
+                            <strong>BILL TO: </strong>
+                            <span>{formVals.customerName}</span>
+                        </div>
+                        <div>
+                            <strong>Address: </strong>
+                            <span>{formVals.customerAdd}</span>
+                        </div>
+                        <div>
+                            <strong>GST: </strong>
+                            <span>{formVals.customerGst}</span>
+                        </div>
+                    </div>
+
+                    <div className="invoice-table">
+                        <div>
+                            <strong>Invoice No: </strong>
+                            {formVals.invoiceNumber && <span>{formVals.invoiceNumber}</span>}
+                        </div>
+                        <div>
+                            <strong>Date: </strong>
+                            {formVals.invoiceDate && <span>{todayDate}</span>}
+                        </div>
+                    </div>
+
                     <table>
                         <thead>
                             <tr>

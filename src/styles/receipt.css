@@ -6,3 +6,48 @@
     padding: 10px;
     background-color: #fff;
 }
+
+.invoice-box {
+    font-size: 12px;
+    line-height: 18px;
+    color: #000;
+    width: 100%;
+
+    .invoice-header {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .invoice-subtext {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .invoice-gst {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .tax-invoice {
+        text-align: center;
+        text-decoration: underline;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+}
+
+.invoice-customer-details {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.invoice-table {
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}

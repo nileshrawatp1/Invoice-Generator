@@ -68,21 +68,11 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         label="Invoice Date"
                         inputType='date'
                         placeholder="e.g. DN/579/26-27"
-                        validation={{ required: GENERIC_ERROR_MSG, valueAsDate: true }}
+                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
 
                 <div className="row">
-                    <FormInput
-                        fieldName="companyGst"
-                        label="Company GST Number"
-                        validation={{ required: GENERIC_ERROR_MSG }}
-                    />
-                    <FormInput
-                        fieldName="customerGst"
-                        label="Customer GST Number"
-                        validation={{ required: GENERIC_ERROR_MSG }}
-                    />
                     <FormInput
                         fieldName="gstPercent"
                         label="GST Percent"
@@ -96,6 +86,16 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         wrapClassName="input-wrapper"
                         symbolClassName="percent-symbol"
                         symbol="%"
+                    />
+                    <FormInput
+                        fieldName="companyGst"
+                        label="Company GST Number"
+                        validation={{ required: GENERIC_ERROR_MSG }}
+                    />
+                    <FormInput
+                        fieldName="customerGst"
+                        label="Customer GST Number"
+                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
             </div>
