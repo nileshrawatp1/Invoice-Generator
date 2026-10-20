@@ -1,25 +1,44 @@
-import { useFormContext, useWatch, type FieldArrayWithId } from 'react-hook-form';
+import { useFormContext, useWatch, type FieldArrayWithId, type UseFieldArrayRemove } from 'react-hook-form';
 import '../styles/receipt.css';
 import type { CustomerFormData } from '../constants/FormTypes';
+import { convertNumberToWords, handleDownloadPdf } from '../constants/functions';
+import { monthNames } from '../constants/formDefaults'
 
 type InvoiceReceiptProps = {
     fields: FieldArrayWithId<CustomerFormData, "addedItems">[];
+    removeItem: UseFieldArrayRemove;
 };
 
-const InvoiceReceipt = ({ fields }: InvoiceReceiptProps) => {
+const InvoiceReceipt = ({ fields, removeItem }: InvoiceReceiptProps) => {
     const { control } = useFormContext<CustomerFormData>();
     const formVals = useWatch({ control });
+    const subTotal = fields.reduce((sum, field) => {
+        const qty = Number(field.itemQuantity) || 0;
+        const price = Number(field.itemPrice) || 0;
+        return sum + qty * price;
+    }, 0);
 
-    const monthNames = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-    ];
+
     const [year, month, day] = (formVals.invoiceDate ?? "").split("-");
     const monthName = monthNames[Number(month) - 1] ?? "";
     const todayDate = year ? `${day}-${monthName}-${year}` : "";
 
+    const gstPercent = formVals.gstPercent ?? 0;
+    const cgst = (subTotal * gstPercent) / 100;
+    const sgst = (subTotal * gstPercent) / 100;
+    const total = subTotal + cgst + sgst;
+    const pdfName = `${formVals.companyName}-${formVals.invoiceNumber}`
+
     return (
         <>
+            <div className="receipt-actions">
+                <button type="button" className="receipt-action receipt-action--download" onClick={() => handleDownloadPdf(pdfName)}>
+                    Download PDF
+                </button>
+                <button type="button" className="receipt-action receipt-action--print" onClick={() => window.print()}>
+                    Print Receipt
+                </button>
+            </div>
             <div id="pdf-content" className="invoice-preview-wrapper">
                 <div className="invoice-box">
                     <div className="invoice-header">{formVals.companyName?.trim().toUpperCase()}</div>
@@ -43,7 +62,7 @@ const InvoiceReceipt = ({ fields }: InvoiceReceiptProps) => {
                         </div>
                     </div>
 
-                    <div className="invoice-table">
+                    <div className="invoice-date-num">
                         <div>
                             <strong>Invoice No: </strong>
                             {formVals.invoiceNumber && <span>{formVals.invoiceNumber}</span>}
@@ -54,7 +73,7 @@ const InvoiceReceipt = ({ fields }: InvoiceReceiptProps) => {
                         </div>
                     </div>
 
-                    <table>
+                    <table className='invoice-items-table'>
                         <thead>
                             <tr>
                                 <th>S. No.</th>
@@ -68,7 +87,7 @@ const InvoiceReceipt = ({ fields }: InvoiceReceiptProps) => {
                             {
                                 fields.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} style={{ textAlign: 'center', padding: '15px' }}> No Items Added</td>
+                                        <td className='no-items' colSpan={5}>No items added yet.</td>
                                     </tr>
                                 ) : (
                                     fields.map((field, index) => {
@@ -82,18 +101,58 @@ const InvoiceReceipt = ({ fields }: InvoiceReceiptProps) => {
                                                 <td>{field.itemName || "—"}</td>
                                                 <td>{qty}</td>
                                                 <td>{price.toFixed(2)}</td>
-                                                <td>{totalAmount.toFixed(2)}</td>
+                                                <td>
+                                                    {totalAmount.toFixed(2)}
+                                                    <button
+                                                        type="button"
+                                                        className="btn-danger no-export"
+                                                        onClick={() => removeItem(index)}
+                                                    >X</button>
+                                                </td>
                                             </tr>
                                         )
                                     })
                                 )
                             }
+                            {subTotal > 0 && (
+                                <tr className='total-amount'>
+                                    <td colSpan={4}>Total</td>
+                                    <td>{subTotal.toFixed(2)}</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
+                    {
+                        total > 0 && <div className="calculation-summary">
+                            <div className="in-words">
+                                <strong>INVOICE AMOUNT IN WORDS: </strong>
+                                <span>{convertNumberToWords(Math.round(total))}</span>
+                            </div>
+                            <div className='gst-cal'>
+                                <div>Sub Total {subTotal.toFixed(2)}</div>
+                                <div>CGST @{gstPercent}%: {cgst.toFixed(2)}</div>
+                                <div>SGST @{gstPercent}%: {sgst.toFixed(2)}</div>
+                                <div>Total: {total.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    }
+
+                    <div className="terms-section">
+                        <strong>TERMS AND CONDITIONS:</strong>
+                        <br />
+                        1. ALL DISPUTES SUBJECT TO DELHI JURISDICTION EXCLUSIVELY.
+                        <br />
+                        2. INTEREST @ 24% WILL BE CHARGED IF THE PAYMENT IS NOT MADE WITHIN
+                        THE STIPULATED TIME.
+                    </div>
+                    <div className="signature-section">
+                        <span>For, {formVals.companyName?.toUpperCase() || 'DEEP NUTRITION'}</span>
+                        Authorized Signatory
+                    </div>
+
                 </div>
             </div>
         </>
     )
 }
-``
 export default InvoiceReceipt;

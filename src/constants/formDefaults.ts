@@ -1,20 +1,14 @@
-export const getTodayDate = (): string => {
-    return new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'Asia/Kolkata'
-    }).format(new Date());
-}
-
-// const [year, month, day] = getTodayDate().split("-").map(Number);
+import { getTodayDate } from './functions';
 
 export const DEFAULT_FORM_VALS = {
     companyName: 'Deep Nutrition',
     companyAdd: 'Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006',
-    customerName: 'Nilesh',
-    customerAdd: 'Rao colony',
-    invoiceNumber: 'DN/579/26-27',
+    customerName: '',
+    customerAdd: '',
+    invoiceNumber: '',
     invoiceDate: getTodayDate(),
-    companyGst: '123456',
-    customerGst: '987650',
+    companyGst: '',
+    customerGst: '',
     gstPercent: undefined,
     itemName: '',
     itemQuantity: undefined,
@@ -23,3 +17,8 @@ export const DEFAULT_FORM_VALS = {
 }
 
 export const GENERIC_ERROR_MSG = 'Field is Required';
+
+export const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
