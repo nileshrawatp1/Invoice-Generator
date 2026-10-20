@@ -15,7 +15,7 @@ export type CustomerFormData = {
     companyGst: string,
     customerGst: string,
     invoiceNumber: string,
-    invoiceDate: Date,
+    invoiceDate: string,
     itemName: string;
     itemQuantity: number | undefined;
     itemPrice: number | undefined;

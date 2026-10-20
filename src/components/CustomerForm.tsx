@@ -45,13 +45,13 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                     <FormInput
                         fieldName="customerName"
                         label="Customer Name"
-                        placeholder="e.g. Nilesh Organization"
+                        placeholder="e.g Nilesh Organization"
                         validation={{ required: GENERIC_ERROR_MSG }}
                     />
                     <FormInput
                         fieldName="customerAdd"
                         label="Customer Address"
-                        placeholder="Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006"
+                        placeholder="e.g Ground Floor, 1897, DELHI-110006"
                         validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
@@ -60,19 +60,34 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                     <FormInput
                         fieldName="invoiceNumber"
                         label="Invoice Number"
-                        placeholder="e.g. DN/579/26-27"
+                        placeholder="e.g DN/579/26-27"
                         validation={{ required: GENERIC_ERROR_MSG }}
                     />
                     <FormInput
                         fieldName="invoiceDate"
                         label="Invoice Date"
                         inputType='date'
-                        placeholder="e.g. DN/579/26-27"
-                        validation={{ required: GENERIC_ERROR_MSG, valueAsDate: true }}
+                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
 
                 <div className="row">
+                    <FormInput
+                        fieldName="gstPercent"
+                        label="GST Percent"
+                        inputType="number"
+                        placeholder="e.g 18.5"
+                        validation={{
+                            required: GENERIC_ERROR_MSG,
+                            valueAsNumber: true,
+                            min: { value: 0, message: 'Below 0 not allowed' },
+                            max: { value: 90, message: 'Above 90 not allowed' }
+                        }}
+                        className="col-gst percent"
+                        wrapClassName="input-wrapper"
+                        symbolClassName="percent-symbol"
+                        symbol="%"
+                    />
                     <FormInput
                         fieldName="companyGst"
                         label="Company GST Number"
@@ -82,20 +97,6 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         fieldName="customerGst"
                         label="Customer GST Number"
                         validation={{ required: GENERIC_ERROR_MSG }}
-                    />
-                    <FormInput
-                        fieldName="gstPercent"
-                        label="GST Percent"
-                        inputType="number"
-                        validation={{
-                            required: GENERIC_ERROR_MSG,
-                            valueAsNumber: true,
-                            max: 90
-                        }}
-                        className="col-gst percent"
-                        wrapClassName="input-wrapper"
-                        symbolClassName="percent-symbol"
-                        symbol="%"
                     />
                 </div>
             </div>

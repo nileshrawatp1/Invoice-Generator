@@ -12,18 +12,21 @@ export function AddItems() {
                     <FormInput
                         fieldName="itemName"
                         label="Item Name"
+                        placeholder="e.g Pre-Workout Supplement 300gm"
                         validation={{ required: GENERIC_ERROR_MSG }}
                     />
                     <FormInput
                         fieldName="itemQuantity"
                         label="Item Quantity"
                         inputType="number"
+                        placeholder="e.g 24"
                         validation={{ required: GENERIC_ERROR_MSG, valueAsNumber: true }}
                     />
                     <FormInput
                         fieldName="itemPrice"
                         label="Item Price (Rate)"
                         inputType="number"
+                        placeholder="e.g 650"
                         validation={{ required: GENERIC_ERROR_MSG, valueAsNumber: true }}
                     />
                     <div className="col submit-btn">

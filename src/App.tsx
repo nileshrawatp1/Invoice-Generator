@@ -10,7 +10,7 @@ function App() {
         defaultValues: DEFAULT_FORM_VALS
     })
 
-    const { fields, append } = useFieldArray({
+    const { fields, append, remove } = useFieldArray({
         control: customerData.control,
         name: 'addedItems'
     })
@@ -20,7 +20,7 @@ function App() {
             <div className="container">
                 <h2>Invoice & Receipt Builder</h2>
                 <CostomerForm appendItem={append} />
-                <InvoiceReceipt fields={fields} />
+                <InvoiceReceipt fields={fields} removeItem={remove} />
             </div>
         </FormProvider>
     )
