@@ -159,4 +159,8 @@ button[type="submit"] {
     button[type="submit"] {
         width: 100%;
     }
+
+    .invoice-date {
+        width: 94%;
+    }
 }

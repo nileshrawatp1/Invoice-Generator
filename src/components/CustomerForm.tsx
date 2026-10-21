@@ -67,6 +67,7 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         fieldName="invoiceDate"
                         label="Invoice Date"
                         inputType='date'
+                        className="invoice-date"
                         validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
