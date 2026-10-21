@@ -27,17 +27,22 @@ const InvoiceReceipt = ({ fields, removeItem }: InvoiceReceiptProps) => {
     const cgst = (subTotal * gstPercent) / 100;
     const sgst = (subTotal * gstPercent) / 100;
     const total = subTotal + cgst + sgst;
-    const pdfName = `${formVals.companyName}-${formVals.invoiceNumber}`
+    const pdfName = `${formVals.companyName}-${formVals.invoiceNumber}`;
+    const hasItems = fields.length > 0;
 
     return (
         <>
             <div className="receipt-actions">
-                <button type="button" className="receipt-action receipt-action--download" onClick={() => handleDownloadPdf(pdfName)}>
-                    Download PDF
-                </button>
-                <button type="button" className="receipt-action receipt-action--print" onClick={() => window.print()}>
-                    Print Receipt
-                </button>
+                <span className="receipt-action-tooltip" data-tooltip={!hasItems ? 'Add at least one item to enable this action.' : undefined}>
+                    <button type="button" className="receipt-action receipt-action--download" disabled={!hasItems} onClick={() => handleDownloadPdf(pdfName)}>
+                        Download PDF
+                    </button>
+                </span>
+                <span className="receipt-action-tooltip" data-tooltip={!hasItems ? 'Add at least one item to enable this action.' : undefined}>
+                    <button type="button" className="receipt-action receipt-action--print" disabled={!hasItems} onClick={() => window.print()}>
+                        Print Receipt
+                    </button>
+                </span>
             </div>
             <div id="pdf-content" className="invoice-preview-wrapper">
                 <div className="invoice-box">
