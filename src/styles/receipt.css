@@ -13,6 +13,41 @@
     gap: 10px;
     margin-top: 24px;
 
+    .receipt-action-tooltip {
+        position: relative;
+        display: inline-flex;
+
+        &[data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            z-index: 2;
+            right: 0;
+            bottom: calc(100% + 8px);
+            width: max-content;
+            max-width: min(260px, calc(100vw - 32px));
+            padding: 7px 10px;
+            border-radius: 4px;
+            background: #24332d;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.4;
+            text-align: center;
+            white-space: normal;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 140ms ease, transform 140ms ease;
+            visibility: hidden;
+        }
+
+        &[data-tooltip]:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+    }
+
     .receipt-action {
         padding: 9px 14px;
         color: #fff;
@@ -34,6 +69,14 @@
         &:hover {
             background-color: #435763;
         }
+    }
+
+    .receipt-action:disabled {
+        background-color: #d9dfdc;
+        color: #68736e;
+        cursor: not-allowed;
+        box-shadow: none;
+        opacity: 1;
     }
 }
 
