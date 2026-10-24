@@ -4,20 +4,28 @@ import type { CustomerFormData } from '../constants/FormTypes';
 import FormInput from "./FormInput";
 import { AddItems } from "./AddItems";
 import { submitAddItem } from "../constants/functions"
+import { useEffect } from "react";
 
 type CustomerFormProps = {
     appendItem: UseFieldArrayAppend<CustomerFormData, "addedItems">
 }
 
 export function CostomerForm({ appendItem }: CustomerFormProps) {
-    const { handleSubmit, getValues, resetField } = useFormContext<CustomerFormData>()
+    const { handleSubmit, getValues, resetField, formState: { isSubmitSuccessful } } = useFormContext<CustomerFormData>();
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            resetField("itemName");
+            resetField("itemQuantity");
+            resetField("itemPrice");
+        }
+    }, [isSubmitSuccessful, resetField])
 
     return (
         <form
             id="invoice-form"
             onSubmit={handleSubmit(submitAddItem({
                 getValues,
-                resetField,
                 appendItem,
             }))}>
             <div className="form-section">
