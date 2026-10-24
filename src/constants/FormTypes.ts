@@ -1,4 +1,4 @@
-import type { UseFieldArrayAppend, UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import type { UseFieldArrayAppend, UseFormGetValues, UseFormResetField } from "react-hook-form";
 
 export interface InvoiceItem {
     itemName: string,
@@ -24,6 +24,6 @@ export type CustomerFormData = {
 
 export type AddItemDependencies = {
     getValues: UseFormGetValues<CustomerFormData>;
-    setValue: UseFormSetValue<CustomerFormData>;
+    resetField: UseFormResetField<CustomerFormData>;
     appendItem: UseFieldArrayAppend<CustomerFormData, "addedItems">;
 };

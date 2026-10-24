@@ -4,7 +4,7 @@ import { jsPDF } from 'jspdf';
 
 export function submitAddItem({
     getValues,
-    setValue,
+    resetField,
     appendItem,
 }: AddItemDependencies) {
     return () => {
@@ -23,9 +23,9 @@ export function submitAddItem({
             itemPrice: Number(price),
         });
 
-        setValue("itemName", "");
-        setValue("itemQuantity", undefined);
-        setValue("itemPrice", undefined);
+        resetField("itemName");
+        resetField("itemQuantity");
+        resetField("itemPrice");
     };
 }
 

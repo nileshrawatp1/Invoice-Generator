@@ -10,14 +10,14 @@ type CustomerFormProps = {
 }
 
 export function CostomerForm({ appendItem }: CustomerFormProps) {
-    const { handleSubmit, getValues, setValue } = useFormContext<CustomerFormData>()
+    const { handleSubmit, getValues, resetField } = useFormContext<CustomerFormData>()
 
     return (
         <form
             id="invoice-form"
             onSubmit={handleSubmit(submitAddItem({
                 getValues,
-                setValue,
+                resetField,
                 appendItem,
             }))}>
             <div className="form-section">
