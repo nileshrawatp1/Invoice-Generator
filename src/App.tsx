@@ -7,7 +7,8 @@ import InvoiceReceipt from './components/RecieptPdf';
 
 function App() {
     const customerData = useForm<CustomerFormData>({
-        defaultValues: DEFAULT_FORM_VALS
+        defaultValues: DEFAULT_FORM_VALS,
+        mode: "onTouched"
     })
 
     const { fields, append, remove } = useFieldArray({
