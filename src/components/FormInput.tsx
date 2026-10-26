@@ -24,8 +24,8 @@ export default function FormInput({
     placeholder,
     validation
 }: FormInputProps) {
-    const { register, formState: { errors } } = useFormContext<CustomerFormData>();
-    const fieldError = get(errors, fieldName);
+    const { register, getFieldState } = useFormContext<CustomerFormData>();
+    const fieldError = getFieldState(fieldName).error;
     const mandateryValidation = {
         ...validation, setValueAs: (value: any) => (typeof value === 'string' ? value.trim() : value),
     };
