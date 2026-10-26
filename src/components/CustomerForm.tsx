@@ -24,6 +24,7 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
     return (
         <form
             id="invoice-form"
+            noValidate
             onSubmit={handleSubmit(submitAddItem({
                 getValues,
                 appendItem,
