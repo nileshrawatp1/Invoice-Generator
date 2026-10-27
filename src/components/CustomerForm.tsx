@@ -1,5 +1,4 @@
 import { useFormContext, type UseFieldArrayAppend } from "react-hook-form";
-import { GENERIC_ERROR_MSG } from "../constants/formDefaults";
 import type { CustomerFormData } from '../constants/FormTypes';
 import FormInput from "./FormInput";
 import { AddItems } from "./AddItems";
@@ -37,16 +36,11 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         fieldName='companyName'
                         label='Company Name'
                         placeholder='Deep Nutrition'
-                        validation={{ required: true }}
                     />
                     <FormInput
                         fieldName='companyAdd'
                         label='Company Address'
                         placeholder='Ground Floor, 1897, chhippy wada, chandni chowk, DELHI-110006'
-                        validation={{
-                            required: 'Company Address Is Required',
-                            validate: (val) => String(val).trim() !== '' || 'Add a valid Company Address'
-                        }}
                     />
                 </div>
 
@@ -55,13 +49,11 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         fieldName="customerName"
                         label="Customer Name"
                         placeholder="e.g Nilesh Organization"
-                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                     <FormInput
                         fieldName="customerAdd"
                         label="Customer Address"
                         placeholder="e.g Ground Floor, 1897, DELHI-110006"
-                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
 
@@ -70,14 +62,12 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         fieldName="invoiceNumber"
                         label="Invoice Number"
                         placeholder="e.g DN/579/26-27"
-                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                     <FormInput
                         fieldName="invoiceDate"
                         label="Invoice Date"
                         inputType='date'
                         className="invoice-date"
-                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
 
@@ -87,12 +77,6 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                         label="GST Percent"
                         inputType="number"
                         placeholder="e.g 18.5"
-                        validation={{
-                            required: GENERIC_ERROR_MSG,
-                            valueAsNumber: true,
-                            min: { value: 0, message: 'Below 0 not allowed' },
-                            max: { value: 90, message: 'Above 90 not allowed' }
-                        }}
                         className="col-gst percent"
                         wrapClassName="input-wrapper"
                         symbolClassName="percent-symbol"
@@ -101,12 +85,10 @@ export function CostomerForm({ appendItem }: CustomerFormProps) {
                     <FormInput
                         fieldName="companyGst"
                         label="Company GST Number"
-                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                     <FormInput
                         fieldName="customerGst"
                         label="Customer GST Number"
-                        validation={{ required: GENERIC_ERROR_MSG }}
                     />
                 </div>
             </div>

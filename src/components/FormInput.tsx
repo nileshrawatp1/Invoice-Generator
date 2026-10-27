@@ -1,4 +1,4 @@
-import { useFormContext, type RegisterOptions, type Path, get } from "react-hook-form";
+import { useFormContext, type Path } from "react-hook-form";
 import type { CustomerFormData } from "../constants/FormTypes";
 
 interface FormInputProps {
@@ -10,7 +10,6 @@ interface FormInputProps {
     symbolClassName?: string,
     symbol?: string,
     placeholder?: string,
-    validation?: RegisterOptions<CustomerFormData, Path<CustomerFormData>>
 }
 
 export default function FormInput({
@@ -22,13 +21,9 @@ export default function FormInput({
     symbolClassName,
     symbol,
     placeholder,
-    validation
 }: FormInputProps) {
-    const { register, getFieldState } = useFormContext<CustomerFormData>();
-    const fieldError = getFieldState(fieldName).error;
-    const mandateryValidation = {
-        ...validation, setValueAs: (value: any) => (typeof value === 'string' ? value.trim() : value),
-    };
+    const { register, getFieldState, formState } = useFormContext<CustomerFormData>();
+    const fieldError = getFieldState(fieldName, formState).error;
 
     return (
         <div className={className}>
@@ -37,7 +32,10 @@ export default function FormInput({
                 <input
                     id={fieldName}
                     type={inputType}
-                    {...register(fieldName, mandateryValidation)}
+                    {...register(
+                        fieldName,
+                        inputType === 'number' ? { valueAsNumber: true } : undefined
+                    )}
                     placeholder={placeholder}
                 />
                 <span className={symbolClassName ? symbolClassName : undefined}>{symbol}</span>

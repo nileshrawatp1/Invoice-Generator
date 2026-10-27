@@ -1,14 +1,15 @@
 import { CostomerForm } from './components/CustomerForm';
 import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
-import type { CustomerFormData } from './constants/FormTypes'
+import { type CustomerFormData, formSchema } from './constants/FormTypes'
 import { DEFAULT_FORM_VALS } from './constants/formDefaults';
 import './App.css';
 import InvoiceReceipt from './components/RecieptPdf';
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function App() {
     const customerData = useForm<CustomerFormData>({
         defaultValues: DEFAULT_FORM_VALS,
-        mode: "onTouched"
+        resolver: zodResolver(formSchema)
     })
 
     const { fields, append, remove } = useFieldArray({
