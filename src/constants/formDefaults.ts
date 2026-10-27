@@ -16,8 +16,6 @@ export const DEFAULT_FORM_VALS = {
     addedItems: [],
 }
 
-export const GENERIC_ERROR_MSG = 'Field is Required';
-
 export const monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
